@@ -1,8 +1,11 @@
 # Arweave-SMT
 
 Centralized database for decentralized purpose on top of Arweave.
+
 This is the source code for the arweave-smt.
+
 The main purpose of the arweave-smt is to create a centralized database that stores key/values pairs for Ethereum smart contract that is deployed on Plasma chain.
+
 Arweave-SMT was built as a submission to this [Open Web Hackathon hosted on Gitcoin](https://gitcoin.co/issue/ArweaveTeam/Bounties/1/2929) using Javascript, CSS, HTML.
 
 In general the application should allow users (dapp developers) to create a personal webservice (that is deployed on Arweave net), that is a centralized database (Sparse Merkle Tree) that will interact with the smart contract deployed in the Ethereum blockchain (track the events and accordingly them extend the database), that allow every contract user to take proof from this database and use this contract.
