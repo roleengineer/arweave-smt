@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="roleengineer">
+    <title>Arweave-SMT</title>
+
+    <!-- Bootstrap -->
+    <script src="https://kit.fontawesome.com/704696012e.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/arweave/bundles/web.bundle.min.js"></script>
+    <style type="text/css">
+      .icon-frame {
+        widht: 30px;
+        height: 30px;
+      }
+
+      .clickable {
+        cursor: pointer;
+      }
+
+      .file-input{
+  			height: 200px;
+  			border: 2px dashed #62666f;
+  			text-align: center;
+  			display: flex;
+  			align-items: center;
+  			justify-content: center;
+  			position: relative;
+  			margin: auto;
+  			max-width: 300px;
+  		}
+
+  		.file-input input[type=file]{
+  			opacity: 0;
+  			position: absolute;
+  			background: none;
+  			width: 100%;
+  			height: 100%;
+  		}
+      output {
+        display:block;
+        border:5px solid #333333;
+        border-radius:5px;
+        min-width:25px; height:150px;
+        margin:3px; padding:10px;
+        text-align:center;
+        background:#000000;
+        color:#ffffff;
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+  		<div class="container flex">
+  			<a class="navbar-brand clickable" style="color: white" id="home-icon">Arweave-SMT</a></button>
+  			<span class="navbar-text" id="public-address"> <!-- shows the arweave address -->
+
+  			</span>
+  			<span class="navbar-item">
+  				<button type="button" class="btn btn-success before_login" data-toggle="modal" data-target="#loginModal">Login to Store Value</button>
+          <a type="button" class="btn btn-primary down_mm" href="https://metamask.io" style="display: none">Download MetaMask</a>
+  			</span>
+  		</div>
+  	</nav>
+    <!-- Block for login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+  	  <div class="modal-dialog modal-dialog-centered" role="document">
+  		<div class="modal-content">
+  		  <div class="modal-header">
+  			<h5 class="modal-title">Login using Arweave
+  				<a href="https://tokens.arweave.org/#/wallet" target="_blank">
+  					Get free tokens
+  				</a>
+  			</h5>
+  			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  			  <span aria-hidden="true">&times;</span>
+  			</button>
+  		  </div>
+  		  <div class="modal-body">
+  			<div class="container">
+  				<div class="row">
+  					<div class="col-lg-12" style="text-align: center;">
+  						<div class="file-input">
+  							<input type="file" id="file" onchange="login(this.files)">
+  							<div id="desc">Drop a keyfile to login</div>
+  						</div>
+  						<i class="fas fa-cog fa-spin login-loading-indicator" style="display: none;"></i>
+  					</div>
+  				</div>
+  			</div>
+  		  </div>
+  		</div>
+  	  </div>
+  	</div>
+    <!-- Index Page -->
+    <div class="container" id="index-page">
+  		<div class="row my-2">
+  			<div class="col-lg-12" id="smt-info-list">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <br/>
+                <h1 class="text-center">DEMO</h1>
+                <h1 class="text-center">Arweave Sparse Merkle Tree</h1>
+                <hr/>
+                <br/>
+              </div>
+              <div class="col-lg-12" id="demo_description">
+                <p class="before_login" style="text-indent: 20px">The general purpose of the Arweave-SMT is to allow developers to create and configurate their own webservice that tracks for the chosen smart contract events and gives neccessary proofs to smart contract users, based on Sparse Merkle Tree. This will be implemented in next releases.</p>
+                <p style="text-indent: 20px;">The purpose of this demo version is to allow users to play with one already created sparse merkle tree(hereinafter - SMT) without interaction with smart contract. You can only store any value (required size is no more than 32 bytes) you want for your ethereum address.</p>
+                <p class="before_login text-center">Firstly, You need to login with your arweave address. After that you'll get available data of the current SMT state.</p>
+                <p class="before_login text-center">Next you need your MetaMask be opened to get input field for your value to store it, and button to get your proof and field to read value from db for every ethereum address you want.</p>
+
+              </div>
+
+              <!-- Block that shows after login with arweave and hides some text from index-page -->
+              <div class="col-lg-12" id="tree_data" style="display: none">
+                <hr>
+                <h2 class="text-center">Current state of Sparse Merkle Tree</h2>
+                <h4 class="text-center">Current SMT root is: <span id="tree_root"></span> <p style="display:none;">[tree.root]</p></h4>
+                <h4 class="text-center">Current number of users: <span id="num_users"></span> <p style="display:none;">[key in leaves: i++]</p></h4>
+                <hr>
+                <br />
+                <div id="wait_mm" class="container">
+                  <p class="text-center">Next you need your MetaMask be opened to get input field for your value to store it, and button to get your proof and field to read value from db for every ethereum address you want.</p>
+                  <div class="col-lg-12 mt-5" style="text-align: center">
+            				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+            			</div>
+                  <div class="col-lg-12">
+                    <p class="text-center">Waiting for MetaMask...</p>
+                  </div>
+                </div>
+                <div class="container down_mm" style="display: none">
+                  <h3 class="text-center">To use application you need browser with MetaMask extension. Please Download MetaMask, use button at the top-right corner of the page to install MetaMask.</h3>
+                  <p class="text-center">Next you need your MetaMask be opened to get input field for your value to store it, and button to get your proof and field to read value from db for every ethereum address you want.</p>
+                  <div class="col-lg-12 mt-5" style="text-align: center">
+            				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+            			</div>
+                  <div class="col-lg-12">
+                    <p class="text-center">Waiting for MetaMask installation...</p>
+                  </div>
+                </div>
+                <div class="container" id="lock_mm" style="display: none">
+                  <h3 class="text-center">Please Login to MetaMask and accept connection request.</h3>
+                  <p class="text-center">Next you need your MetaMask be opened to get input field for your value to store it, and button to get your proof and field to read value from db for every ethereum address you want.</p>
+                  <div class="col-lg-12 mt-5" style="text-align: center">
+            				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+            			</div>
+                  <div class="col-lg-12">
+                    <p class="text-center">Waiting for MetaMask connection request...</p>
+                  </div>
+                </div>
+                <div class="container" id="cancel_mm" style="display: none">
+                  <h3 class="text-center">You canceled MetaMask connection request. To use application for storing, reading value and getting proof, you need to accept connection request.</h3>
+                  <p class="text-center">If you want to continue use application and get new connection request, please use button below.</p>
+                  <button onclick="check_metamask()" class="btn btn-primary btn-lg" style="display: table; margin:0 auto;">Repeat MetaMask connection</button>
+                  <div class="col-lg-12 mt-5" style="text-align: center">
+            				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+            			</div>
+                  <div class="col-lg-12">
+                    <p class="text-center">Waiting for MetaMask connection request...</p>
+                  </div>
+                </div>
+              </div>
+              <!-- Block after MetaMask success and address success -->
+              <div id="interact_db" class="container" style="display: none">
+                <h3 class="text-center" id="eth_address">Your Ethereum Address: </h3>
+                <h3> Store your value</h3>
+                <p>DEMO version takes your Ethereum address via MetaMask as a path(key) to leaf (your value).</p>
+                <p>Pressing "Store Value" button will form and send transaction to Arweave network, so it will cost you approximately 0.0003AR.</p>
+                <form id="val_form" onsubmit="return false;" role="form">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input id="user_value" class="form-control input-lg" type="text" placeholder="Enter number - data type uint256 (no more than 32 bytes)" pattern="[0-9]+" minlength="1" maxlength="78" required>
+                      </input>
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-lg">Store Value</button>
+                    </div>
+                  </div>
+                </form>
+                <br />
+                <br />
+                <h3> Get your proof</h3>
+                <p> This proof updates every time when new data comes to SMT (this is the point why this webservice is needed).</p>
+                <p> To interact with the smart contract that uses SMT logic you need to bring your proof. </p>
+                <button id="get_proof" style="float: right;" type="button" class="btn btn-primary btn-lg">Get proof</button>
+                <br />
+                <br />
+                <output><p id="proof_text">Output field for your proof </p><span id="proof"></span></output>
+                <br />
+                <br />
+                <h3> Read value (format hex) of address</h3>
+                <form id="read_form" onsubmit="return false;" role="form">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input id="input_address" class="form-control input-lg" type="text" name="proof" placeholder="Enter the address the value of what you want to read" pattern="0x[a-fA-F\d]+" maxlength="42" minlength="42" required>
+                      </input>
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-lg">Read Value</button>
+                    </div>
+                    <br />
+                    <output style="height:85px;"><p id="read_text">Output field for value of chosen ethereum address </p><span id="read_value"></span></output>
+                  </div>
+                </form>
+                <br />
+                <br />
+              </div>
+              <div class="col-lg-12 mt-5 before_login" style="text-align: center">
+        				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+        			</div>
+              <div class="col-lg-12 before_login" id="loader">
+                <p class="text-center">Waiting for login...</p>
+              </div>
+            </div>
+          </div>
+
+  			</div>
+  		</div>
+  		<div class="row mt-2 mb-4">
+  			<div class="col-lg-12">
+  				<hr>
+  				<span class="clickable" data-toggle="modal" data-target="#aboutModal">About</span>
+  				<span class="float-right">
+  					<a href="https://www.arweave.org/" target="_blank">
+  						<img class="icon-frame" src="./img/arweave.png">
+  					</a>
+  					<a href="https://github.com/roleengineer/arweave-smt" target="_blank">
+  						<img class="icon-frame" src="./img/github.png">
+  					</a>
+  				</span>
+  			</div>
+  		</div>
+  	</div>
+
+    <!--About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModal" aria-hidden="true">
+  	  <div class="modal-dialog modal-lg" role="document">
+  	    <div class="modal-content">
+  	      <div class="modal-header">
+  	        <h5 class="modal-title">About</h5>
+  	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  	          <span aria-hidden="true">&times;</span>
+  	        </button>
+  	      </div>
+  	      <div class="modal-body">
+  	      	<p class="text-center">
+  	      		Arweave-SMT is a permaweb application that allows developers to create their own permaweb applications. The application that is created with Arweave-SMT is a webservice. It is needed when you create a smart contract that uses such data sctructure as sparse merkle tree, e.g. smart contract imports sparse merkle tree library to improve some logic. Your users need to bring proofs to interact with your contract. To solve this issue you can simply use Arweave-SMT. You customize your webservice to track your smart contract events and your users can use it to take neccessary proofs. Also, you can use it as a database and fetch data from it to use on your own UI built on permaweb or web2.
+  	      		<br>
+  	      		Powered by Arweave, this application is only for DEMO purpose!
+  	      	</p>
+  	      </div>
+  	      <div class="modal-footer">
+  	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  	      </div>
+  	    </div>
+  	  </div>
+  	</div>
+
+    <script>
+  		var arweave = Arweave.init({host: 'arweave.net', port: 443, protocol: 'https'});
+  	</script>
+    <script src="js/login.js"></script>
+    <script src="js/arweave.js"></script>
+    <script src="bundle.js"></script>
+
+  </body>
+
+</html>
