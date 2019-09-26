@@ -33,17 +33,18 @@ function update_login_state(is_logged_in, address) {
 	if (is_logged_in) {
 		$("#public-address").html(address);
     $(".before_login").hide();
-    $("#tree_data").show();
+    $("#contract_data").show();
 		check_metamask();
 	} else {
 		$("#public-address").html();
     $(".before_login").show();
-    $("#tree_data").show();
+    $("#contract_data").show();
 	}
 }
 
 
 var address;
+let provider;
 
 function check_metamask() {
    if (typeof window.ethereum !== 'undefined' && ethereum.isMetaMask) {
@@ -52,15 +53,29 @@ function check_metamask() {
       $("#wait_mm").hide();
       $("#lock_mm").show();
       $('#down_mm').hide();
-
+      ethereum.autoRefreshOnNetworkChange = false;
+      provider = window['ethereum'];
+      if (ethereum.networkVersion === '3') {
+        provider = window['ethereum'];
+        new_smt();
+      } else {
+        $("#net_mm").show();
+      }
       ethereum.enable()
         .then(function (accounts) {
           console.log('MetaMask is unlocked');
           $("#lock_mm").hide();
           $("#cancel_mm").hide();
-          $("#interact_db").show();
           var add = accounts[0];
+          address = window.ethereum.selectedAddress;
           document.getElementById("eth_address").innerHTML += add;
+          if (ethereum.networkVersion === '3') {
+            $("#interact_db").show();
+            provider = window['ethereum'];
+            new_smt();
+          } else {
+            $("#net_mm").show();
+          }
         })
         .catch(() => {
           console.log('MetaMask is locked, canseled by user');
@@ -72,6 +87,17 @@ function check_metamask() {
         var add = accounts[0];
         document.getElementById("eth_address").innerHTML = "Your Ethereum Address: " + add;
         address = window.ethereum.selectedAddress;
+      })
+      ethereum.on('networkChanged', function(net) {
+        if (net === '3') {
+          $("#net_mm").hide();
+          $("#interact_db").show();
+          provider = window['ethereum'];
+          new_smt();
+        } else {
+          $("#net_mm").show();
+          $("#interact_db").hide();
+        }
       })
 
       address = window.ethereum.selectedAddress; //next add check if undefined

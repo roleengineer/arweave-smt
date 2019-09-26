@@ -17,3 +17,5 @@ In general the application should allow users (dapp developers) to create a pers
 - v.0.0.1. Third stage is an application that allow every Arweave user (basically ethereum dApp developers) to create own webservice for personal ethereum smart contract. User will be able to customize new webservice to interact with custom smart contract. The creation besides the transaction fee will cost some AR.
 
 Current Working Version (Stage#1) can be found at https://arweave.net/7hWDZTIsxs_FHx0neiedSgAUy-yqBgt0wIBqKyrM_Zc
+Current Working Version (Stage#2) can be found at
+https://arweave.net/9hybbl0wMtaZ19TtW6IB7eD_kzfDD52AxRfxD70TZYM

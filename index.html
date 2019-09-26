@@ -64,7 +64,7 @@
 
   			</span>
   			<span class="navbar-item">
-  				<button type="button" class="btn btn-success before_login" data-toggle="modal" data-target="#loginModal">Login to Store Value</button>
+  				<button type="button" class="btn btn-success before_login" data-toggle="modal" data-target="#loginModal">Login to use service</button>
           <a type="button" class="btn btn-primary down_mm" href="https://metamask.io" style="display: none">Download MetaMask</a>
   			</span>
   		</div>
@@ -107,29 +107,29 @@
             <div class="row">
               <div class="col-lg-12">
                 <br/>
-                <h1 class="text-center">DEMO</h1>
-                <h1 class="text-center">Arweave Sparse Merkle Tree</h1>
+                <h1 class="text-center">DEMO v2</h1>
+                <h1 class="text-center">Proving web service that interacts with Demo contract</h1>
                 <hr/>
                 <br/>
               </div>
               <div class="col-lg-12" id="demo_description">
-                <p class="before_login" style="text-indent: 20px">The general purpose of the Arweave-SMT is to allow developers to create and configurate their own webservice that tracks for the chosen smart contract events and gives neccessary proofs to smart contract users, based on Sparse Merkle Tree. This will be implemented in next releases.</p>
-                <p style="text-indent: 20px;">The purpose of this demo version is to allow users to play with one already created sparse merkle tree(hereinafter - SMT) without interaction with smart contract. You can only store any value (required size is no more than 32 bytes) you want for your ethereum address.</p>
-                <p class="before_login text-center">Firstly, You need to login with your arweave address. After that you'll get available data of the current SMT state.</p>
-                <p class="before_login text-center">Next you need your MetaMask be opened to get input field for your value to store it, and button to get your proof and field to read value from db for every ethereum address you want.</p>
+                <p class="before_login" style="text-indent: 20px">The general purpose of the Arweave-SMT is to allow developers to create and configurate their own proving webservice (like this one) that tracks for the chosen smart contract events and gives neccessary proofs to smart contract users. This will be implemented in the next release. <a href="https://arweave.net/7hWDZTIsxs_FHx0neiedSgAUy-yqBgt0wIBqKyrM_Zc" >See also previous one</a>.</p>
+                <p style="text-indent: 20px;">The purpose of this demo is to allow users to play with one already created proving web service that interacts with one already deployed (on Ropsten network) smart contract that uses sparse merkle tree logic. The demo contract is ERC20 token that doesn't store balances, but only merkle root of all data. In this way to check the balance or transfer tokens you need to use this proving service for getting proofs and other required values.</p>
+                <p class="before_login text-center">Firstly, You need to login with your arweave address. After that you'll get information about demo contract.</p>
+                <p class="before_login text-center">Next, you need your MetaMask be opened and network should be switched to Ropsten Test Network.</p>
 
               </div>
 
               <!-- Block that shows after login with arweave and hides some text from index-page -->
-              <div class="col-lg-12" id="tree_data" style="display: none">
+              <div class="col-lg-12" id="contract_data" style="display: none">
                 <hr>
-                <h2 class="text-center">Current state of Sparse Merkle Tree</h2>
-                <h4 class="text-center">Current SMT root is: <span id="tree_root"></span> <p style="display:none;">[tree.root]</p></h4>
-                <h4 class="text-center">Current number of users: <span id="num_users"></span> <p style="display:none;">[key in leaves: i++]</p></h4>
+                <h2 class="text-center">Web service is associated with the contract at address <a href="https://ropsten.etherscan.io/address/0xa92331818497318196384e802ca59681a7db898e#code">0xA92331818497318196384E802Ca59681A7Db898e</a></h2>
+                <h5 class="text-center">It is a ERC20 token named Arweave SMT Example Token with total supply 21 million without decimals. It doesn't use contract storage to store balances mapping, instead that it stores only merkle root of that data and due to this service you can get necessary data to interact with it (e.g., check your balance or transfer ASET tokens to someone else).</h4>
+                <h4 id="sync" class="text-center"></h4> <!-- take care about synchronizing-->
                 <hr>
                 <br />
                 <div id="wait_mm" class="container">
-                  <p class="text-center">Next you need your MetaMask be opened to get input field for your value to store it, and button to get your proof and field to read value from db for every ethereum address you want.</p>
+                  <p class="text-center">Next, you need your MetaMask be opened and network should be switched to Ropsten Test network.</p>
                   <div class="col-lg-12 mt-5" style="text-align: center">
             				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
             			</div>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="container down_mm" style="display: none">
                   <h3 class="text-center">To use application you need browser with MetaMask extension. Please Download MetaMask, use button at the top-right corner of the page to install MetaMask.</h3>
-                  <p class="text-center">Next you need your MetaMask be opened to get input field for your value to store it, and button to get your proof and field to read value from db for every ethereum address you want.</p>
+                  <p class="text-center">Next, you need your MetaMask be opened and network should be switched to Ropsten Test network.</p>
                   <div class="col-lg-12 mt-5" style="text-align: center">
             				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
             			</div>
@@ -149,7 +149,7 @@
                 </div>
                 <div class="container" id="lock_mm" style="display: none">
                   <h3 class="text-center">Please Login to MetaMask and accept connection request.</h3>
-                  <p class="text-center">Next you need your MetaMask be opened to get input field for your value to store it, and button to get your proof and field to read value from db for every ethereum address you want.</p>
+                  <p class="text-center">Next, you need your MetaMask be opened and network should be switched to Ropsten Test network.</p>
                   <div class="col-lg-12 mt-5" style="text-align: center">
             				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
             			</div>
@@ -157,8 +157,18 @@
                     <p class="text-center">Waiting for MetaMask connection request...</p>
                   </div>
                 </div>
+                <div class="container" id="net_mm" style="display: none">
+                  <h3 class="text-center">Please switch your network into MetaMask to 'Ropsten Test Network'.</h3>
+                  <p class="text-center">This web service works only with Ropsten, so if you will choose another network it wouldn't work.</p>
+                  <div class="col-lg-12 mt-5" style="text-align: center">
+            				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+            			</div>
+                  <div class="col-lg-12">
+                    <p class="text-center">Waiting for switching Ethereum network...</p>
+                  </div>
+                </div>
                 <div class="container" id="cancel_mm" style="display: none">
-                  <h3 class="text-center">You canceled MetaMask connection request. To use application for storing, reading value and getting proof, you need to accept connection request.</h3>
+                  <h3 class="text-center">You canceled MetaMask connection request. To use application you need to accept connection request.</h3>
                   <p class="text-center">If you want to continue use application and get new connection request, please use button below.</p>
                   <button onclick="check_metamask()" class="btn btn-primary btn-lg" style="display: table; margin:0 auto;">Repeat MetaMask connection</button>
                   <div class="col-lg-12 mt-5" style="text-align: center">
@@ -171,44 +181,62 @@
               </div>
               <!-- Block after MetaMask success and address success -->
               <div id="interact_db" class="container" style="display: none">
+                <h4 class="text-center">To get 100 ASET free to play with contract click button below and confirm transaction. <span id="num_users"></span> <p style="display:none;">[key in leaves: i++]</p></h4>
+                <button id="get_100_et" type="button" style="display: block; max-width: 300px; margin: auto;" class="btn btn-primary btn-lg">Get 100 ASET</button>
+                <br>
+                <hr>
                 <h3 class="text-center" id="eth_address">Your Ethereum Address: </h3>
-                <h3> Store your value</h3>
-                <p>DEMO version takes your Ethereum address via MetaMask as a path(key) to leaf (your value).</p>
-                <p>Pressing "Store Value" button will form and send transaction to Arweave network, so it will cost you approximately 0.0003AR.</p>
-                <form id="val_form" onsubmit="return false;" role="form">
+                <br />
+                <br />
+                <h3> Get data for function BalanceOf </h3>
+                <p> You can use different approaches to interact with a contract. E.g., you can use your own node with your personal contract instance, REMIX, or even <a href="https://ropsten.etherscan.io/dapp/0xa92331818497318196384e802ca59681a7db898e">this new etherscan UI</a> and others.</p>
+                <p> Whether approach you use, you need actual values of required parameters.</p>
+                <form id="balanceOf" onsubmit="return false;" role="form">
                   <div class="form-group">
                     <div class="input-group">
-                      <input id="user_value" class="form-control input-lg" type="text" placeholder="Enter number - data type uint256 (no more than 32 bytes)" pattern="[0-9]+" minlength="1" maxlength="78" required>
+                      <input id="input_bal_address" class="form-control input-lg" type="text" placeholder="Enter the address you want to get data about" pattern="0x[a-fA-F\d]+" maxlength="42" minlength="42" required>
                       </input>
                       <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary btn-lg">Store Value</button>
-                    </div>
-                  </div>
-                </form>
-                <br />
-                <br />
-                <h3> Get your proof</h3>
-                <p> This proof updates every time when new data comes to SMT (this is the point why this webservice is needed).</p>
-                <p> To interact with the smart contract that uses SMT logic you need to bring your proof. </p>
-                <button id="get_proof" style="float: right;" type="button" class="btn btn-primary btn-lg">Get proof</button>
-                <br />
-                <br />
-                <output><p id="proof_text">Output field for your proof </p><span id="proof"></span></output>
-                <br />
-                <br />
-                <h3> Read value (format hex) of address</h3>
-                <form id="read_form" onsubmit="return false;" role="form">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <input id="input_address" class="form-control input-lg" type="text" name="proof" placeholder="Enter the address the value of what you want to read" pattern="0x[a-fA-F\d]+" maxlength="42" minlength="42" required>
-                      </input>
-                      <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary btn-lg">Read Value</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Get data of entered address</button>
+                        <button id="mm_balance" style="float: right;" type="button" class="btn btn-warning btn-lg">Get data of current MetaMask address</button>
                     </div>
                     <br />
-                    <output style="height:85px;"><p id="read_text">Output field for value of chosen ethereum address </p><span id="read_value"></span></output>
+                    <output><p id="balanceOf_text">Output field for data of chosen ethereum address </p><span id="balanceOf_output"></span></output>
                   </div>
                 </form>
+                <br />
+                <br />
+                <h3> Get data for functions Transfer or transferFrom </h3>
+                <p> For usual ERC20 functions transfer or transferFrom you need three parameters sender (in transfer it skips, because sender is msg.sender), recipient and amount.</p>
+                <p> For SMT you need to bring proofs for actors. </p>
+                <form id="transfer_data" onsubmit="return false;" role="form">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input id="input_sender" class="form-control input-lg" type="text" placeholder="Enter senders address here" pattern="0x[a-fA-F\d]+" maxlength="42" minlength="42" required>
+                      </input>
+                    </div>
+                    <div class="input-group">
+                      <input id="input_recipient" class="form-control input-lg" type="text" placeholder="Enter recipients address here" pattern="0x[a-fA-F\d]+" maxlength="42" minlength="42" required>
+                      </input>
+                    </div>
+                    <div class="input-group">
+                      <input id="input_amount" class="form-control input-lg" type="text" placeholder="Enter the amount that is planned to be transferred" pattern="[0-9]+" minlength="1" maxlength="78" required>
+                      </input>
+                    </div>
+                    <div>
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-lg" >Get data of entered parameters</button>
+                    </div>
+                    <br />
+                    <output style="min-width:25px; height:250px;"><p id="transfer_text">Output field for data of chosen parameters </p><span id="transfer_output"></span></output>
+                  </div>
+                </form>
+                <br />
+                <br />
+                <h3> DONATE</h3>
+                <p>You can participate in improving this webservice. The case is to have permamently database on the Arweave network. Service fetchs data from Arweave database and new appearing data (due to new transactions on Ethereum network) from Ethereum network. Your participation is to send transaction to Arweave network with peace of a new data from Ethereum (the new data is distributed in a way that amount of donation is approximately 0.00001AR). In this way you update database with actual data and reduce webservice dependency on Ethereum network.  </p>
+                <p id="press_donate"> By pressing "Donate" button you will be prompt to donate the specific amount and you will be able confirm or reject the donation.</p>
+                <button id="donate" type="button" class="btn btn-success btn-lg">Donate</button>
                 <br />
                 <br />
               </div>
@@ -231,7 +259,7 @@
   					<a href="https://www.arweave.org/" target="_blank">
   						<img class="icon-frame" src="./img/arweave.png">
   					</a>
-  					<a href="https://github.com/roleengineer/arweave-smt" target="_blank">
+  					<a href="https://github.com/roleengineer/arweave-smt/tree/DEMO_0.1.1" target="_blank">
   						<img class="icon-frame" src="./img/github.png">
   					</a>
   				</span>
@@ -251,7 +279,7 @@
   	      </div>
   	      <div class="modal-body">
   	      	<p class="text-center">
-  	      		Arweave-SMT is a permaweb application that allows developers to create their own permaweb applications. The application that is created with Arweave-SMT is a webservice. It is needed when you create a smart contract that uses such data sctructure as sparse merkle tree, e.g. smart contract imports sparse merkle tree library to improve some logic. Your users need to bring proofs to interact with your contract. To solve this issue you can simply use Arweave-SMT. You customize your webservice to track your smart contract events and your users can use it to take neccessary proofs. Also, you can use it as a database and fetch data from it to use on your own UI built on permaweb or web2.
+  	      		Arweave-SMT is a permaweb application that allows developers to create their own permaweb applications. The application that is created with Arweave-SMT is a proving webservice. It is needed when you create a smart contract that uses such data sctructure as sparse merkle tree, e.g. smart contract imports sparse merkle tree library to improve some logic. Your users need to bring proofs to interact with your contract. To solve this issue you can simply use Arweave-SMT. You customize your proving webservice to track your smart contract events and your users can use it to take neccessary proofs. Also, you can use it as a database and fetch data from it to use on your own UI built on permaweb or web2.
   	      		<br>
   	      		Powered by Arweave, this application is only for DEMO purpose!
   	      	</p>
